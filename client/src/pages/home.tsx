@@ -68,10 +68,18 @@ export default function Home() {
 
         <Tabs defaultValue="all" className="mb-6" onValueChange={(value) => setPriorityFilter(value as PriorityFilter)}>
           <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-[1px] bg-muted p-[1px] !m-0">
-            <TabsTrigger value="all" className="data-[state=active]:bg-background">All Tasks</TabsTrigger>
-            <TabsTrigger value="low" className="data-[state=active]:bg-background">Low</TabsTrigger>
-            <TabsTrigger value="medium" className="data-[state=active]:bg-background">Medium</TabsTrigger>
-            <TabsTrigger value="high" className="data-[state=active]:bg-background">High</TabsTrigger>
+            <TabsTrigger value="all" className="data-[state=active]:bg-background">
+              {priorityFilter === "all" ? <strong>All Tasks</strong> : "All Tasks"}
+            </TabsTrigger>
+            <TabsTrigger value="low" className="data-[state=active]:bg-background">
+              {priorityFilter === "low" ? <strong>Low</strong> : "Low"}
+            </TabsTrigger>
+            <TabsTrigger value="medium" className="data-[state=active]:bg-background border-t sm:border-t-0">
+              {priorityFilter === "medium" ? <strong>Medium</strong> : "Medium"}
+            </TabsTrigger>
+            <TabsTrigger value="high" className="data-[state=active]:bg-background border-t sm:border-t-0">
+              {priorityFilter === "high" ? <strong>High</strong> : "High"}
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="all">

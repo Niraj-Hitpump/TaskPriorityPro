@@ -55,7 +55,7 @@ export default function Home() {
                   <span className="sm:hidden">Add</span>
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[500px]">
+              <DialogContent className="sm:max-w-[500px] bg-white dark:bg-gray-900">
                 <DialogHeader>
                   <DialogTitle>Create New Task</DialogTitle>
                 </DialogHeader>

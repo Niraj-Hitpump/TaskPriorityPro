@@ -67,11 +67,11 @@ export default function Home() {
         </div>
 
         <Tabs defaultValue="all" className="mb-6" onValueChange={(value) => setPriorityFilter(value as PriorityFilter)}>
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-8">
-            <TabsTrigger value="all">All Tasks</TabsTrigger>
-            <TabsTrigger value="low">Low</TabsTrigger>
-            <TabsTrigger value="medium">Medium</TabsTrigger>
-            <TabsTrigger value="high">High</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-[1px] bg-muted p-[1px] !m-0">
+            <TabsTrigger value="all" className="data-[state=active]:bg-background">All Tasks</TabsTrigger>
+            <TabsTrigger value="low" className="data-[state=active]:bg-background">Low</TabsTrigger>
+            <TabsTrigger value="medium" className="data-[state=active]:bg-background">Medium</TabsTrigger>
+            <TabsTrigger value="high" className="data-[state=active]:bg-background">High</TabsTrigger>
           </TabsList>
 
           <TabsContent value="all">

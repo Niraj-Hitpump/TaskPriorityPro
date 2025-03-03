@@ -1,6 +1,7 @@
 import { type Task } from "@shared/schema";
 import TaskCard from "./task-card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ClipboardList } from "lucide-react";
 
 interface TaskListProps {
   tasks: Task[];
@@ -20,8 +21,14 @@ export default function TaskList({ tasks, isLoading }: TaskListProps) {
 
   if (tasks.length === 0) {
     return (
-      <div className="text-center py-8 text-muted-foreground">
-        No tasks found
+      <div className="text-center py-12 px-4">
+        <div className="inline-block p-4 rounded-full bg-muted mb-4">
+          <ClipboardList className="h-8 w-8 text-muted-foreground" />
+        </div>
+        <h3 className="text-lg font-medium text-foreground mb-2">No tasks yet</h3>
+        <p className="text-sm text-muted-foreground">
+          Click the "Add Task" button to create your first task ✨
+        </p>
       </div>
     );
   }

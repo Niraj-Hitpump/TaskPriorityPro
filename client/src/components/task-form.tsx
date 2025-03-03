@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { insertTaskSchema, type InsertTask } from "@shared/schema";
+import { insertTaskSchema, type InsertTask, type Task } from "@shared/schema";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,30 +10,44 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import { useToast } from "@/hooks/use-toast";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 
-export default function TaskForm() {
+interface TaskFormProps {
+  initialTask?: Task;
+  onSuccess?: () => void;
+}
+
+export default function TaskForm({ initialTask, onSuccess }: TaskFormProps) {
   const { toast } = useToast();
   const form = useForm<InsertTask>({
     resolver: zodResolver(insertTaskSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      priority: "low",
-      dueDate: new Date().toISOString().slice(0, 16),
-      completed: false,
+      title: initialTask?.title ?? "",
+      description: initialTask?.description ?? "",
+      priority: initialTask?.priority ?? "low",
+      dueDate: initialTask?.dueDate 
+        ? new Date(initialTask.dueDate).toISOString().slice(0, 16)
+        : new Date().toISOString().slice(0, 16),
+      completed: initialTask?.completed ?? false,
     },
   });
 
   const mutation = useMutation({
     mutationFn: async (data: InsertTask) => {
-      await apiRequest("POST", "/api/tasks", data);
+      if (initialTask) {
+        await apiRequest("PATCH", `/api/tasks/${initialTask.id}`, data);
+      } else {
+        await apiRequest("POST", "/api/tasks", data);
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/tasks"] });
       toast({
-        title: "Task created",
-        description: "Your task has been created successfully.",
+        title: initialTask ? "Task updated" : "Task created",
+        description: initialTask 
+          ? "Your task has been updated successfully."
+          : "Your task has been created successfully.",
       });
       form.reset();
+      onSuccess?.();
     },
   });
 
@@ -122,9 +136,9 @@ export default function TaskForm() {
           <Button 
             type="submit" 
             disabled={mutation.isPending}
-            className="w-full md:w-auto"
+            className="w-full md:w-auto bg-primary hover:bg-primary/90"
           >
-            Add Task
+            {initialTask ? "Update Task" : "Add Task"}
           </Button>
         </div>
       </form>

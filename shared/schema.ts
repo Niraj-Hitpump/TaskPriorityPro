@@ -5,6 +5,7 @@ import { z } from "zod";
 export const tasks = pgTable("tasks", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
+  description: text("description"),
   priority: text("priority", { enum: ["low", "medium", "high"] }).notNull(),
   dueDate: timestamp("due_date").notNull(),
   completed: boolean("completed").notNull().default(false),
@@ -13,12 +14,14 @@ export const tasks = pgTable("tasks", {
 export const insertTaskSchema = createInsertSchema(tasks)
   .pick({
     title: true,
+    description: true,
     priority: true,
     dueDate: true,
     completed: true,
   })
   .extend({
     title: z.string().min(1, "Title is required"),
+    description: z.string().optional(),
     priority: z.enum(["low", "medium", "high"]),
     dueDate: z.coerce.date(),
   });

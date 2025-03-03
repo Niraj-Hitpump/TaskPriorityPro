@@ -47,29 +47,30 @@ export default function TaskCard({ task }: TaskCardProps) {
 
   return (
     <>
-      <Card className="p-4 hover:shadow-lg transition-shadow">
-        <div className="flex items-center gap-4">
+      <Card className="p-4 hover:shadow-lg transition-shadow bg-gray-50 dark:bg-gray-900">
+        <div className="flex items-start gap-4">
           <Checkbox
             checked={task.completed}
             onCheckedChange={() => toggleMutation.mutate()}
             disabled={toggleMutation.isPending}
+            className="mt-1"
           />
 
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <h3 className={cn(
-              "text-lg font-medium",
+              "text-lg font-medium truncate",
               task.completed && "line-through text-muted-foreground"
             )}>
               {task.title}
             </h3>
 
             {task.description && (
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
                 {task.description}
               </p>
             )}
 
-            <div className="flex gap-2 mt-2">
+            <div className="flex flex-wrap gap-2 mt-2">
               <Badge variant="outline" className={priorityColors[task.priority]}>
                 {task.priority}
               </Badge>
@@ -79,7 +80,7 @@ export default function TaskCard({ task }: TaskCardProps) {
             </div>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-1 sm:gap-2 shrink-0">
             <Button
               variant="ghost"
               size="icon"

@@ -28,17 +28,18 @@ export default function Home() {
     .sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
 
   return (
-    <div className="min-h-screen bg-background p-4 md:p-6">
+    <div className="min-h-screen bg-white dark:bg-gray-950 p-4 md:p-6 lg:p-8">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold text-primary">
+          <h1 className="text-2xl md:text-3xl font-bold text-primary">
             My Tasks
           </h1>
-          <div className="flex gap-4">
+          <div className="flex gap-2 md:gap-4">
             <Button
               variant="outline"
               size="icon"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="shrink-0"
             >
               {theme === "dark" ? (
                 <Sun className="h-[1.2rem] w-[1.2rem]" />
@@ -48,9 +49,10 @@ export default function Home() {
             </Button>
             <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
               <DialogTrigger asChild>
-                <Button className="gap-2">
+                <Button className="gap-2 whitespace-nowrap">
                   <Plus className="h-4 w-4" />
-                  Add Task
+                  <span className="hidden sm:inline">Add Task</span>
+                  <span className="sm:hidden">Add</span>
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[500px]">
@@ -65,11 +67,11 @@ export default function Home() {
         </div>
 
         <Tabs defaultValue="all" className="mb-6" onValueChange={(value) => setPriorityFilter(value as PriorityFilter)}>
-          <TabsList className="grid w-full grid-cols-4 mb-8">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-8">
             <TabsTrigger value="all">All Tasks</TabsTrigger>
-            <TabsTrigger value="low">Low Priority</TabsTrigger>
-            <TabsTrigger value="medium">Medium Priority</TabsTrigger>
-            <TabsTrigger value="high">High Priority</TabsTrigger>
+            <TabsTrigger value="low">Low</TabsTrigger>
+            <TabsTrigger value="medium">Medium</TabsTrigger>
+            <TabsTrigger value="high">High</TabsTrigger>
           </TabsList>
 
           <TabsContent value="all">

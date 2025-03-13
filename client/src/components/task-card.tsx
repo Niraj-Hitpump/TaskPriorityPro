@@ -47,7 +47,7 @@ export default function TaskCard({ task }: TaskCardProps) {
 
   return (
     <>
-      <Card className="p-4 hover:shadow-lg transition-shadow bg-gray-50 dark:bg-gray-900">
+      <Card className="p-4 mt-12 hover:shadow-lg transition-shadow bg-gray-50 dark:bg-gray-900">
         <div className="flex items-start gap-4">
           <Checkbox
             checked={task.completed}
